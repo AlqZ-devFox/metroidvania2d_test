@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,7 +11,8 @@ public class PlayerMovement : MonoBehaviour
     
     #region Global Attributes
     [SerializeField] public Rigidbody playerRb;
-    [SerializeField] public PlayerInput playerInput;
+    // [SerializeField] public PlayerInput playerInput;
+    private PlayerInput playerInput;
 
     public float jumpForce;
     public float walkSpeed;
@@ -24,20 +24,20 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         playerRb = GetComponent<Rigidbody>();
-        playerInput = GetComponent<PlayerInput>();
+        playerInput = new PlayerInput();
     }//EndOf Unity method Awake
     
     #endregion
     
     #region Own Methods
-
-    private void PlayerWalk()
+    private void OnWalk()
     {
-        if (playerInput.actions.Equals("Walk")) //TODO: Turns out, this doesn't work like that
-        {
-            this.playerRb.linearVelocity = Vector3.forward *  walkSpeed;
-        }
-    }//EndOf method PlayerWalk
+        Debug.Log("OnWalk was called");
+
+        //TODO Check Player's rotation
+        
+        playerRb.linearVelocity = Vector3.forward * walkSpeed;
+    }//endOf method OnWalk
     
     #endregion
 }
