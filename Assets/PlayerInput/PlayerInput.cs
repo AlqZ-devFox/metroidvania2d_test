@@ -29,9 +29,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Walk"",
-                    ""type"": ""Button"",
-                    ""id"": ""caf57a5d-69a8-4175-9a88-b3b37504ebf4"",
-                    ""expectedControlType"": """",
+                    ""type"": ""Value"",
+                    ""id"": ""7bf62028-1278-4040-8303-c0cfa69a190f"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -40,7 +40,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""f0148e8c-68ee-42a1-8808-9ae61547c34c"",
+                    ""id"": ""35498955-8ea3-40a2-8031-019916ebbaaf"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -50,8 +50,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""WASD"",
-                    ""id"": ""ab3f82df-1473-4b8b-a4a4-5aff369111e2"",
+                    ""name"": ""2D Vector"",
+                    ""id"": ""61105ba6-17b6-4a4f-90ea-795e1201e393"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -61,45 +61,23 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""e59ba9c5-18cb-4daf-8657-4805f630dc05"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Walk"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""95a10dbc-b58e-4001-b2b7-d2bb6d39d8e1"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Walk"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""left"",
-                    ""id"": ""d9a0faaf-17ad-494c-8a3d-6b5ac5d0706e"",
+                    ""id"": ""4699f066-0b44-4677-8b28-d737304eec61"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""5fa0a4f0-0e3f-46d8-8c9c-c9d1a3bb70d9"",
+                    ""id"": ""79e50e47-8f9d-4f06-bbf4-c86b9229539d"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
