@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public Rigidbody playerRb;
     // [SerializeField] public PlayerInput playerInput;
     private PlayerInput playerInput;
+    private InputAction actionWalk;
+    private InputAction actionJump;
 
     public float jumpForce;
     public float walkSpeed;
@@ -24,7 +27,10 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         playerRb = GetComponent<Rigidbody>();
-        playerInput = new PlayerInput();
+        playerInput = GetComponent<PlayerInput>();
+
+        actionWalk = playerInput.FindAction("Walk");
+        actionJump = playerInput.FindAction("Jump");
     }//EndOf Unity method Awake
     
     #endregion
@@ -36,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
         //TODO Check Player's rotation
         
-        playerRb.linearVelocity = Vector3.forward * walkSpeed;
+        
     }//endOf method OnWalk
     
     #endregion
