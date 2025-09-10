@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,17 +13,33 @@ public class PlayerMovement : MonoBehaviour
      */
     
     #region Global Attributes
-    public float jumpForce;
-    public float walkSpeed;
+    [SerializeField] [Range(0.1f, 100)] private float jumpForce;
+    [SerializeField] [Range(0.1f, 100)] private float walkSpeed;
+    
+    [SerializeField] [Range(-100, 0)] private float gravity = -9.8f;
+    [SerializeField] [Range(0.1f, 1)] private float airborneDrag = 1;
     //public float speedBoostSpeed; //Leaving this here now, but you do NOT want to tackle with this at the moment, future Alyx will take care of it
+
+    private CharacterController _charController;
+    private Vector2 _inputWalk;
+    private Vector3 _velocity;
 
     #endregion
     
     #region Unity Methods
-    void Awake()
+    private void Awake()
     {
-        
+        _charController = GetComponent<CharacterController>();
     }//EndOf Unity method Awake
+
+    private void Update()
+    {
+        WalkLogic();
+        
+        //Jump logic
+        _velocity.y += gravity * Time.deltaTime;
+        _charController.Move(_velocity * Time.deltaTime);
+    }//EndOf Unity method Update
 
     #endregion
     
@@ -30,5 +47,29 @@ public class PlayerMovement : MonoBehaviour
     
     //FUUUCK using "Send Messages", I could not, for the life of me, find any way for the fucking Rigidbody to listen to me
     //I'll now try and use the CharacterController component, which avoids using a Rigidbody entirely
+
+    public void OnWalk(InputAction.CallbackContext context)
+    {
+        _inputWalk = context.ReadValue<Vector2>();
+        airborneDrag = 1;
+        Debug.Log($"Walk Input: {_inputWalk}");
+    }//EndOf method OnWalk
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        Debug.Log($"Jumping {context.performed} - Is Grounded: {_charController.isGrounded}");
+        if (context.performed && _charController.isGrounded)
+        {
+            Debug.Log("Are you jumping, son?");
+            _velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
+            airborneDrag = 0.88f;
+        }//EndOf IF
+    }//EndOf method OnJump
+
+    private void WalkLogic()
+    {
+        _charController.Move(new Vector3(_inputWalk.x, 0, _inputWalk.y) * (walkSpeed * Time.deltaTime * airborneDrag));
+    }//EndOf method WalkLogic
+
     #endregion
 }
