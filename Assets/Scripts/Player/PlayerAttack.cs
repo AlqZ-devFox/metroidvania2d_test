@@ -28,6 +28,9 @@ public class PlayerAttack : MonoBehaviour
     void Update()
     {
         //Beam shot Logic
+        
+        //This is real fucking expensive, and doesn't even work
+        //TODO - Find a better way to do this, dummy
         var beams = GameObject.FindGameObjectsWithTag("Beam");
         for (var index = 0; index < beams.Length; index++)
         {
