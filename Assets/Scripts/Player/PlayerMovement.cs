@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController _charController;
     private Vector2 _inputWalk;
     private Vector3 _velocity;
+    
+    private Transform _playerTransform;
 
     #endregion
     
@@ -30,11 +32,15 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         _charController = GetComponent<CharacterController>();
+        _playerTransform = GetComponent<Transform>();
+        
+        _playerTransform.rotation = Quaternion.Euler(0, 90, 0);
     }//EndOf Unity method Awake
 
     private void Update()
     {
         WalkLogic();
+        RotateLogic();
         
         //Jump logic
         _velocity.y += gravity * Time.deltaTime;
@@ -70,6 +76,16 @@ public class PlayerMovement : MonoBehaviour
     {
         _charController.Move(new Vector3(_inputWalk.x, 0, _inputWalk.y) * (walkSpeed * Time.deltaTime * airborneDrag));
     }//EndOf method WalkLogic
+    
+    private void RotateLogic()
+    {
+        //This approach results in undesired behaviour (why the FUCK are you facing away from the camera)
+        if (_inputWalk.x != 0)
+        {
+            Vector3 newRot = new Vector3(0, MathF.Abs(_playerTransform.rotation.y) * _inputWalk.x, 0);
+            _playerTransform.rotation = Quaternion.Euler(newRot);
+        }//EndOf IF
+    }//EndOf method RotateLogic
 
     #endregion
 }
