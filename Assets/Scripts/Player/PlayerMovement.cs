@@ -79,12 +79,13 @@ public class PlayerMovement : MonoBehaviour
     
     private void RotateLogic()
     {
-        //This approach results in undesired behaviour (why the FUCK are you facing away from the camera)
-        if (_inputWalk.x != 0)
+        if (_inputWalk.x < 0)
         {
-            Vector3 newRot = new Vector3(0, MathF.Abs(_playerTransform.rotation.y) * _inputWalk.x, 0);
-            _playerTransform.rotation = Quaternion.Euler(newRot);
-        }//EndOf IF
+            _playerTransform.rotation = Quaternion.Euler(0, -90, 0);
+        }else if (_inputWalk.x > 0)
+        {
+            _playerTransform.rotation = Quaternion.Euler(0, 90, 0);
+        }//EndOf IF/ELSE chain
     }//EndOf method RotateLogic
 
     #endregion
