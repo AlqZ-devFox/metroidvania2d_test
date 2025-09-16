@@ -58,12 +58,12 @@ public class PlayerMovement : MonoBehaviour
     {
         _inputWalk = context.ReadValue<Vector2>();
         airborneDrag = 1;
-        Debug.Log($"Walk Input: {_inputWalk}");
+        //Debug.Log($"Walk Input: {_inputWalk}");
     }//EndOf method OnWalk
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        Debug.Log($"Jumping {context.performed} - Is Grounded: {_charController.isGrounded}");
+        //Debug.Log($"Jumping {context.performed} - Is Grounded: {_charController.isGrounded}");
         if (context.performed && _charController.isGrounded)
         {
             Debug.Log("Are you jumping, son?");

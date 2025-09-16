@@ -1,15 +1,17 @@
-using NUnit.Framework.Constraints;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class PlayerAttack : MonoBehaviour
 {
     #region Global Variables
     
-    [SerializeField] private GameObject beam; //the beam itself, as a prefab
-    private Rigidbody _beamRb;
-    
-    [SerializeField] private GameObject beamOrigin; //from where the shots are going to come from
+    [SerializeField] private GameObject beam;
+    private GameObject[] _beams; //array of beam prefab
+    [SerializeField] private Transform beamOrigin; //from where the shots are going to come from
+    [SerializeField] private int maxBeam = 64;
+    [SerializeField] private float waitToDestroy = 6;
 
     [SerializeField] [Range(0.1f, 1000f)] private float beamDamage;
     [SerializeField] [Range(0.1f, 1000f)] private float beamSpeed;
@@ -22,21 +24,19 @@ public class PlayerAttack : MonoBehaviour
 
     void Awake()
     {
-        _beamRb = beam.GetComponent<Rigidbody>();
+        for (int i = 0; i < maxBeam; i++)
+        {
+            _beams[i] = Instantiate(beam, beamOrigin);
+            _beams[i].SetActive(false);
+        }//EndOf FOR Loop
+        
+        beam.SetActive(false);
     }//EndOf Unity method Awake
-    
+
     void Update()
     {
-        //Beam shot Logic
-        
-        //This is real fucking expensive, and doesn't even work
-        //TODO - Find a better way to do this, dummy
-        var beams = GameObject.FindGameObjectsWithTag("Beam");
-        for (var index = 0; index < beams.Length; index++)
-        {
-            var beam = beams[index];
-            beam.GetComponent<Rigidbody>().AddForce(beamOrigin.transform.forward * beamSpeed, ForceMode.Acceleration);
-        }//EndOf FOR-Loop
+        //Beam Logic
+        BeamLogic();
     }//EndOf Unity method Update
 
     #endregion
@@ -45,11 +45,34 @@ public class PlayerAttack : MonoBehaviour
     
     public void OnShoot(InputAction.CallbackContext context)
     {
-        GameObject clone = Instantiate(beam, beamOrigin.transform.position, beamOrigin.transform.rotation);
-        //TODO - Think of how to have the bullet actually project itself (already have a couple ideas while typing this)
-        
-        Destroy(clone, 7f);
+        for (int i = 0; i < _beams.Length; i++)
+        {
+            if (context.performed && !_beams[i].activeInHierarchy)
+            {
+                _beams[i].SetActive(true);
+                StartCoroutine(DeactivateBeam(_beams[i]));
+                
+                return;
+            }//EndOf IF
+        }//EndOf FOR Loop
     }//EndOf method OnShoot
+
+    private IEnumerator DeactivateBeam(GameObject beam)
+    {
+        yield return new WaitForSeconds(waitToDestroy);
+        beam.SetActive(false);
+    }
+
+    private void BeamLogic()
+    {
+        for (int i = 0; i < _beams.Length; i++)
+        {
+            if (_beams[i].activeInHierarchy)
+            {
+                _beams[i].GetComponent<Rigidbody>().linearVelocity = Vector3.forward * (beamSpeed * Time.deltaTime);
+            }//EndOf IF
+        }//EndOf FOR Loop
+    }//EndOf method BeamLogic
     
     #endregion
 }

@@ -519,7 +519,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beam: {fileID: 1503484887880044210, guid: 9d884eb1cd94999498ed2deb8afc9934, type: 3}
-  beamOrigin: {fileID: 324275808}
+  beamOrigin: {fileID: 324275809}
+  maxBeam: 64
+  waitToDestroy: 6
   beamDamage: 1
   beamSpeed: 80
 --- !u!1 &410087039
