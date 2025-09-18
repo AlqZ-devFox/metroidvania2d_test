@@ -9,7 +9,7 @@ public class PlayerAttack : MonoBehaviour
     
     [SerializeField] private GameObject beam;
     [SerializeField] private Transform beamOrigin; //from where the shots are going to come from
-    //private bool _isTriple; //Worry about this later to test Wide Beam
+    //private bool _isTriple; //Worry about this later to test Wide Beam, but you'll need two extra beam origins
     
     #endregion
 
